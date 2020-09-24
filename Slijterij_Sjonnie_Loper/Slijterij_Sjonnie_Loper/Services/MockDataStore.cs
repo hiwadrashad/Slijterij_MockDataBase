@@ -11,15 +11,15 @@ namespace Slijterij_Sjonnie_Loper.Services
     
     public class MockDataStoreClient : IDataStore<ModelClient>
     {
-        readonly List<ModelClient> items;
+        public readonly List<ModelClient> items;
 
         public MockDataStoreClient()
         {
-           // storedictionary.Add(SingletonData.StoreDataWhiskey.items.FirstOrDefault(),1);
+            // storedictionary.Add(SingletonData.StoreDataWhiskey.items.FirstOrDefault(),1);
 
             items = new List<ModelClient>()
             {
-            new ModelClient { id = Guid.NewGuid().ToString(),  Name = "John Smith", ReservedWhiskeys = new Dictionary<ModelWhiskey, int>() }
+            new ModelClient { id = Guid.NewGuid().ToString(),  Name = "John Smith", Whiskeys = new List<string>{ "Jack Daniels" }, Amount = new List<int>{ 1 } }
             };
         }
         public  bool AddItem(ModelClient item)
@@ -63,7 +63,7 @@ namespace Slijterij_Sjonnie_Loper.Services
     public class MockDataStoreCollaborator : IDataStore<ModelCollaborator>
     {
 
-        readonly List<ModelCollaborator> items;
+        public readonly List<ModelCollaborator> items;
 
         public MockDataStoreCollaborator()
         {
@@ -134,6 +134,12 @@ namespace Slijterij_Sjonnie_Loper.Services
             {
             new ModelWhiskey { Id = Guid.NewGuid().ToString(), Age = "50", AlcoholPercentage = "90", AmountOfBottles =  12, Label = File.ReadAllBytes("Images/whiskey-label.png"), Name = "Jack Daniels", Price = "12.50", ProductionSite = "France", TypeWhiskey = "Single Malt" }
             };
+        }
+
+        public List<ModelWhiskey>? SearchWhiskeys(string name)
+        {
+
+            return items.Where(x => x.Name == name || name == null).ToList();
         }
 
         public bool AddItem(ModelWhiskey item)

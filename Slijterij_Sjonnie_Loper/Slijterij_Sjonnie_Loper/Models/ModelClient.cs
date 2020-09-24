@@ -11,6 +11,8 @@ namespace Slijterij_Sjonnie_Loper.Models
 
         public string Name { get; set; }
 
-        public Dictionary<ModelWhiskey, int> ReservedWhiskeys { get; set; }
+        public List<string> Whiskeys { get; set; }
+
+        public List<int> Amount { get; set; }
     }
 }

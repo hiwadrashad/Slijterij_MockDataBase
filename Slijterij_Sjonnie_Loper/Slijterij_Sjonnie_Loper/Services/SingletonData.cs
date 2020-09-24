@@ -13,6 +13,10 @@ namespace Slijterij_Sjonnie_Loper.Services
 
         public static MockDataStoreWhiskey StoreDataWhiskey { get; set; }
 
-        public static bool initialized = false;
+        public static bool ClientInitialized = false;
+
+        public static bool CollaboratorInitialized = false;
+
+        public static bool WhiskeyInitialized = false;
     }
 }

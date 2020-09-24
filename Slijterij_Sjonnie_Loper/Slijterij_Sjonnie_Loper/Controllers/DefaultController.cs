@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Slijterij_Sjonnie_Loper.Models;
 using Slijterij_Sjonnie_Loper.Services;
 
 namespace Slijterij_Sjonnie_Loper.Controllers
@@ -11,30 +12,30 @@ namespace Slijterij_Sjonnie_Loper.Controllers
     public class DefaultController : Controller
     {
         // GET: Default
-
-      //  public static void Main(string[] args)
-     //   {
-    //        if (SingletonData.initialized == false)
-    //        {
-    //            SingletonData.StoreDataClient = new MockDataStoreClient();
-     //           SingletonData.StoreDataCollaborator = new MockDataStoreCollaborator();
-     //           SingletonData.StoreDataWhiskey = new MockDataStoreWhiskey();
-     //       }
-
-    //    }
-        public ActionResult Index()
+        public ActionResult WhiskeyOverview(string searching)
         {
-            return View();
+            if (SingletonData.WhiskeyInitialized == false)
+            {
+                SingletonData.StoreDataWhiskey = new MockDataStoreWhiskey();
+                SingletonData.WhiskeyInitialized = true;
+            }
+            return View(SingletonData.StoreDataWhiskey.SearchWhiskeys(searching).ToList());
+                // items.ToList()) ;
         }
 
         // GET: Default/Details/5
-        public ActionResult Details(int id)
+        public ActionResult DetailsWhiskey(string id)
         {
-            return View();
+            if (SingletonData.WhiskeyInitialized == false)
+            {
+                SingletonData.StoreDataWhiskey = new MockDataStoreWhiskey();
+                SingletonData.WhiskeyInitialized = true;
+            }
+            return View(SingletonData.StoreDataWhiskey.items.Where(x => x.Id == id).FirstOrDefault());
         }
 
         // GET: Default/Create
-        public ActionResult Create()
+        public ActionResult CreateWhiskey()
         {
             return View();
         }
@@ -42,11 +43,18 @@ namespace Slijterij_Sjonnie_Loper.Controllers
         // POST: Default/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult CreateWhiskey(ModelWhiskey modelwhiskey)
         {
             try
             {
                 // TODO: Add insert logic here
+                if (SingletonData.WhiskeyInitialized == false)
+                {
+                    SingletonData.StoreDataWhiskey = new MockDataStoreWhiskey();
+                    SingletonData.WhiskeyInitialized = true;
+                }
+
+                SingletonData.StoreDataWhiskey.items.Add(modelwhiskey);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -59,18 +67,28 @@ namespace Slijterij_Sjonnie_Loper.Controllers
         // GET: Default/Edit/5
         public ActionResult Edit(int id)
         {
+            if (SingletonData.WhiskeyInitialized == false)
+            {
+                SingletonData.StoreDataWhiskey = new MockDataStoreWhiskey();
+                SingletonData.WhiskeyInitialized = true;
+            }
             return View();
         }
 
         // POST: Default/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, ModelWhiskey modelwhiskey)
         {
             try
             {
-                // TODO: Add update logic here
 
+                if (SingletonData.WhiskeyInitialized == false)
+                {
+                    SingletonData.StoreDataWhiskey = new MockDataStoreWhiskey();
+                    SingletonData.WhiskeyInitialized = true;
+                }
+                // TODO: Add update logic here
                 return RedirectToAction(nameof(Index));
             }
             catch

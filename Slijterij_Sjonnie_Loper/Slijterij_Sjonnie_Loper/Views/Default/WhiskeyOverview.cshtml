@@ -1,0 +1,96 @@
+﻿@model IEnumerable<Slijterij_Sjonnie_Loper.Models.ModelWhiskey>
+@addTagHelper *,  Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>WhiskeyOverview</title>
+    <style>
+        #whiskeyoverview-div {
+            position: absolute;
+            left: 40%;
+            top: 40%;
+            border: 1px solid #ccc;
+            padding: 10px 10px;
+        }
+    </style>
+</head>
+<body>
+<p>
+    <a asp-action="CreateWhiskey">Create New</a>
+</p>
+ <br/><br/>
+    @using (Html.BeginForm("WhiskeyOverview", "Default", FormMethod.Get))
+    { 
+    @Html.TextBox("searching")<input type="submit" value="Search">
+    }
+<table id="whiskeyoverview-div" class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Age)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductionSite)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AlcoholPercentage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TypeWhiskey)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Count() == 0)
+        { 
+            <tr>
+                <td colspan="3" style="color:red">
+                    No Matching Documents
+                </td>
+
+            </tr>
+
+        }
+        else
+        {
+@foreach (var item in Model)
+{
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Age)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductionSite)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AlcoholPercentage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TypeWhiskey)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "DetailsWhiskey", new { /* id=item.PrimaryKey */ }) |
+             <!--   @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ }) -->
+            </td>
+        </tr>
+    }
+}
+    </tbody>
+</table>
+</body>
+</html>

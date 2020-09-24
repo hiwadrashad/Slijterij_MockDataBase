@@ -51,7 +51,7 @@ namespace Slijterij_Sjonnie_Loper
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Login}/{action=Login}/{id?}");
+                    pattern: "{controller=Default}/{action=CreateWhiskey}/{id?}");
             });
         }
     }
